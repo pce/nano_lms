@@ -9,7 +9,7 @@ import Datetime from 'react-datetime'
 
 import { withRouter } from 'react-router-dom'
 
-import { fetchEvent, updateEvent, createEvent } from '../../api'
+import { fetchEvent, updateEvent, createEvent, fetchCourses } from '../../api'
 
 function EventsEditPage(props) {
   const [data, setData] = useState({
@@ -18,6 +18,7 @@ function EventsEditPage(props) {
     end:'',
     title:''
   })
+  const [courses, setCourses] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isMutated, setIsMutated] = useState(false)
 
@@ -29,6 +30,11 @@ function EventsEditPage(props) {
     fetchEvent(props.match.params.id).then((response)=>{
       console.log(response.data)
       setData(response.data.event)
+      setIsLoading(false)
+    })
+    fetchCourses().then((response) => {
+      // console.log(response.data)
+      setCourses(response.data.courses)
       setIsLoading(false)
     })
   }, []);
@@ -58,8 +64,6 @@ function EventsEditPage(props) {
   }
 
   const handleInputDate = (event, name) => {
-    // console.log(event.toJSON())
-    // console.log(event.toISOString())
     // see https://momentjs.com/docs/#/displaying/
     let value = event
     // if (event.format) {
@@ -85,7 +89,10 @@ function EventsEditPage(props) {
     setIsMutated(true)
   }
 
- return (
+  // console.log('data')
+  // console.log(data)
+
+  return (
     <Container style={{marginTop:'2em'}}>
       <Row>
         <Col>
@@ -101,10 +108,14 @@ function EventsEditPage(props) {
         <label>end</label><br/>
         <Datetime dateFormat="DD.MM.YYYY" value={data.end} name="end" onChange={handleInputDateEnd} />
 
+        <label>Kurs</label><br/>
+        <select value={data.course_id}>
+          <option value={null}>--</option>
+          {courses.map((val)=> <option value={val.id}>{val.title}</option>)}
+        </select>
         <br/>
-
-        {/* select course */}
-
+        <br/>
+        <br/>
         <p>
         <Button disabled={!isMutated} type="button" variant="primary" onClick={() => { handleSaveEvent(data.id) }}>Save</Button>&nbsp;
         <Button type="button" variant="normal" onClick={() => { props.history.goBack() }}>Cancel</Button>

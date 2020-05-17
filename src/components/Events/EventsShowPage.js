@@ -5,11 +5,8 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
 // import { LinkContainer } from "react-router-bootstrap"
 import { withRouter } from 'react-router-dom'
-import { format } from 'date-fns'
-import parse from 'date-fns/parse'
 import { fetchEvent,  deleteEvent } from '../../api'
 
 function EventsShowPage(props) {
@@ -51,6 +48,8 @@ function EventsShowPage(props) {
     <h2>{data.event.title}</h2>
     <p>{data.event.start}</p>
     <p>{data.event.end}</p>
+
+    <p>{data.event.course_id}</p>
 
     <p>
       <br/>

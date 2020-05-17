@@ -59,7 +59,7 @@ const EventsIndexPage = (props) => {
                 {dateOfEvent}
                 </td>
                 <td>
-                {item.course_id}
+                {item.course && item.course.title}
                 </td>
               </tr>
             )
