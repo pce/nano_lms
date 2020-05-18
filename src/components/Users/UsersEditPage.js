@@ -29,7 +29,7 @@ function UsersEditPage(props) {
       setData(response.data.user)
       setIsLoading(false)
     })
-  }, []);
+  }, [props.match.params.id, props.mode]);
 
   const handleSaveUser = (id) => {
     if (props.mode === 'create') {

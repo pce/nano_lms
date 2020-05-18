@@ -37,7 +37,7 @@ function EventsEditPage(props) {
       setCourses(response.data.courses)
       setIsLoading(false)
     })
-  }, []);
+  }, [props.match.params.id, props.mode]);
 
   const handleSaveEvent = (id) => {
     if (props.mode === 'create') {

@@ -29,10 +29,9 @@ function CoursesEditPage(props) {
       setData(response.data.course)
       setIsLoading(false)
     })
-  }, []);
+  }, [props.match.params.id, props.mode]);
 
   const handleSaveCourse = (id) => {
-    // const course = { prod_name: data.prod_name, prod_desc: data.prod_desc, prod_price: parseInt(data.prod_price) };
     if (props.mode === 'create') {
       createCourse(data)
       .then((result) => {

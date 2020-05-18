@@ -15,12 +15,13 @@ import 'react-big-calendar/lib/sass/styles.scss'
 
 const localizer = momentLocalizer(moment)
 
-const resourceMap = [
-  { resourceId: 1, resourceTitle: 'Großer Raum' },
-  { resourceId: 2, resourceTitle: 'Kleiner Raum' },
-  { resourceId: 3, resourceTitle: 'Raum Oben' },
-  // { resourceId: 4, resourceTitle: 'Raum 4' },
-]
+// const resourceMap = [
+//   { resourceId: 1, resourceTitle: 'Großer Raum' },
+//   { resourceId: 2, resourceTitle: 'Kleiner Raum' },
+//   { resourceId: 3, resourceTitle: 'Raum Oben' },
+//   // { resourceId: 4, resourceTitle: 'Raum 4' },
+// ]
+
 
 export const CalendarPage = props => {
 

@@ -24,16 +24,16 @@ const CoursesIndexPage = (props) => {
 
   const query = useQuery();
 
-  // let name = query.get("name")
+  const page = query.get("page") || 1
 
   useEffect(() => {
-    let page = query.get("page") || 1
+    // let page = query.get("page") || 1
     fetchCourses(page).then((response) => {
       // console.log(response.data)
       setData(response.data)
       setIsLoading(false)
     })
-  }, []);
+  }, [page]);
 
   const handleAddCourse = () => {
     props.history.push('courses/create')

@@ -19,7 +19,7 @@ function EventsShowPage(props) {
       setData(response.data)
       setIsLoading(false)
     })
-  }, []);
+  }, [props.match.params.id]);
 
  const handleEditEvent = (id) => {
   props.history.push({

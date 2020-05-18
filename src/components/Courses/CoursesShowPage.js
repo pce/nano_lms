@@ -6,10 +6,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
-// import { LinkContainer } from "react-router-bootstrap"
 import { withRouter } from 'react-router-dom'
-import { format } from 'date-fns'
-import parse from 'date-fns/parse'
 import { fetchCourse,  deleteCourse } from '../../api'
 
 function CoursesShowPage(props) {
@@ -18,11 +15,11 @@ function CoursesShowPage(props) {
 
   useEffect(() => {
     fetchCourse(props.match.params.id).then((response)=>{
-      console.log(response.data)
+      // console.log(response.data)
       setData(response.data)
       setIsLoading(false)
     })
-  }, []);
+  }, [props.match.params.id]);
 
  const handleEditCourse = (id) => {
   props.history.push({
@@ -31,7 +28,6 @@ function CoursesShowPage(props) {
  };
 
  const handleDeleteCourse = (id) => {
-  // const course = { prod_name: data.prod_name, prod_desc: data.prod_desc, prod_price: parseInt(data.prod_price) };
   deleteCourse(id)
    .then((result) => {
     setIsLoading(false);
@@ -49,10 +45,6 @@ function CoursesShowPage(props) {
           {/* <Card.Title>{item.title}</Card.Title> */}
           <Card.Text>
             {item.start} - {item.end}
-{/*
-  2020-03-28T13:00:53.000Z
-  {(parse(item.start, 'yyyy-MM-ddHH:mm:ss.000Z', new Date()), 'DD.MM.YYYY HH:mm')} - {  (parse(item.end, 'yyyy-MM-ddHH:mm:ss.000Z', new Date()), 'DD.MM.YYYY HH:mm')}
-*/}
           </Card.Text>
           {/* <LinkContainer to={`/events/${item.id}`}>
             <Button variant="primary">mehr ...</Button>
