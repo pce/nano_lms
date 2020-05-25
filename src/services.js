@@ -159,7 +159,6 @@ export async function createCourse(data) {
 
 //#endregion
 
-
 //#region events
 
 export async function fetchEvent(id) {
@@ -210,7 +209,6 @@ export async function createEvent(data) {
   })
 }
 
-
 export const updateEvent = async (id, data) => {
   const url = `${API_URL}/events/${id}`
   return await axios.put(url, {
@@ -245,73 +243,4 @@ export async function deleteEvent(id) {
     })
 }
 
-
-/*
-export const updateEvent = async (eventData) => {
-  // const response = await fetch(`${API_URL}/events/`, {
-  await fetch(`${API_URL}/events/`, {
-    method: "patch",
-    credentials: "include",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(eventData)
-  }).then(function(response) {
-      return response.json();
-  }).then(function(data) {
-      console.log("Data is ok", data);
-  }).catch(function(ex) {
-      console.log("parsing failed", ex);
-  })
-}
-*/
 //#endregion
-
-/**
- * sign_in
-   curl -XPOST -v -H 'Content-Type: application/json' http://localhost:3000/api/v1/sign_in -d '{"sign_in": {"email": "email@example.com", "password": "admin1"}}'
- *
- *
-export const signIn = async (signInData) => {
-  const response = await fetch(`${API_URL}/sign_in`, {
-    method: "post",
-    // credentials: "include",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(signInData)
-  }).then(function(response) {
-    return response.json();
-  }).then(function(data) {
-    console.log("Data is ok", data);
-  }).catch(function(ex) {
-    console.log("parsing failed", ex);
-  })
-
-}
-
-const createEvent = async (eventData) => {
-  const response = await fetch(`${API_URL}/events/`, {
-    method: "put",
-    credentials: "include",
-    headers: {
-      "X-CSRFToken": getCookie("csrftoken"),
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(eventData)
-  }).then(function(response) {
-      return response.json();
-  }).then(function(data) {
-      console.log("Data is ok", data);
-  }).catch(function(ex) {
-      console.log("parsing failed", ex);
-  })
-}
-
-
-
-*/
-

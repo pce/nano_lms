@@ -7,7 +7,8 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 // import { LinkContainer } from "react-router-bootstrap"
 import { withRouter } from 'react-router-dom'
-import { fetchEvent,  deleteEvent } from '../../api'
+import { fetchEvent,  deleteEvent } from '../../services'
+import { formatDateRange } from '../../utils'
 
 function EventsShowPage(props) {
   const [data, setData] = useState({});
@@ -36,9 +37,6 @@ function EventsShowPage(props) {
    }).catch((error) => setIsLoading(false));
  };
 
-
-
-
  return (
     <Container style={{marginTop:'2em'}}>
       <Row>
@@ -50,6 +48,8 @@ function EventsShowPage(props) {
     <h2>{data.event.title}</h2>
     <p>{data.event.start}</p>
     <p>{data.event.end}</p>
+
+   <p>{formatDateRange(data.event.start, data.event.end)}</p>
 
     <p>{((data.event.course_id) && data.event.course.title)}</p>
 

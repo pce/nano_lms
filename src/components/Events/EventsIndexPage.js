@@ -8,7 +8,7 @@ import Table from 'react-bootstrap/Table'
 import { withRouter } from 'react-router-dom'
 import { LinkContainer } from "react-router-bootstrap"
 
-import { fetchEvents } from '../../api'
+import { fetchEvents } from '../../services'
 import {formatDateRange } from '../../utils'
 
 

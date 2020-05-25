@@ -10,7 +10,7 @@ import Pagination from 'react-bootstrap/Pagination'
 import { withRouter, useLocation } from 'react-router-dom'
 
 import { LinkContainer } from "react-router-bootstrap"
-import { fetchCourses } from '../../api'
+import { fetchCourses } from '../../services'
 
 
 function useQuery() {

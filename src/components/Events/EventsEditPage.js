@@ -9,7 +9,7 @@ import Datetime from 'react-datetime'
 
 import { withRouter } from 'react-router-dom'
 
-import { fetchEvent, updateEvent, createEvent, fetchCourses } from '../../api'
+import { fetchEvent, updateEvent, createEvent, fetchCourses } from '../../services'
 
 function EventsEditPage(props) {
   const [data, setData] = useState({

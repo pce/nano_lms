@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col'
 
 import { withRouter } from 'react-router-dom'
 
-import { fetchUser, updateUser, createUser } from '../../api'
+import { fetchUser, updateUser, createUser } from '../../services'
 
 function UsersEditPage(props) {
   const [data, setData] = useState({

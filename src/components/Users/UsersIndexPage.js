@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { withRouter } from 'react-router-dom'
 
-import { fetchUsers } from '../../api'
+import { fetchUsers } from '../../services'
 
 const UsersIndexPage = (props) => {
 

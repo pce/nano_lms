@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner'
 
 import moment from 'moment'
 
-import { fetchEvents, updateEvent } from '../api'
+import { fetchEvents, updateEvent } from '../services'
 import 'react-datetime/css/react-datetime.css'
 import 'react-big-calendar/lib/sass/styles.scss'
 // import 'react-big-calendar/lib/addons/dragAndDrop/styles.scss'

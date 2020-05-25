@@ -16,7 +16,7 @@ import UsersEditPage from './components/Users/UsersEditPage';
 import { LoginPage } from './components/LoginPage';
 import { NotFoundPage } from './components/NotFoundPage';
 import LayoutAdmin  from './components/LayoutAdmin';
-import { signIn, signOut } from './api'
+import { signIn, signOut } from './services'
 
 function App() {
 

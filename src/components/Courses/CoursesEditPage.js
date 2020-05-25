@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col'
 
 import { withRouter } from 'react-router-dom'
 
-import { fetchCourse, updateCourse, createCourse } from '../../api'
+import { fetchCourse, updateCourse, createCourse } from '../../services'
 
 function CoursesEditPage(props) {
   const [data, setData] = useState({
