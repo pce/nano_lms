@@ -37,6 +37,8 @@ function EventsShowPage(props) {
  };
 
 
+
+
  return (
     <Container style={{marginTop:'2em'}}>
       <Row>
@@ -49,7 +51,7 @@ function EventsShowPage(props) {
     <p>{data.event.start}</p>
     <p>{data.event.end}</p>
 
-    <p>{data.event.course_id}</p>
+    <p>{((data.event.course_id) && data.event.course.title)}</p>
 
     <p>
       <br/>
