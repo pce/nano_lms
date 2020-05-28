@@ -216,7 +216,7 @@ export const updateEvent = async (id, data) => {
       start: data.start,
       end: data.end,
       title: data.title,
-      courses_id: (typeof data.coursesId !== 'undefined') ? Number(data.coursesId) : null,
+      course_id: (typeof data.courseId !== 'undefined') ? Number(data.courseId) : null,
     },
   }, {
     headers: {

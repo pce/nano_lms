@@ -77,7 +77,7 @@ function EventsEditPage(props) {
   }
 
   const handleInput = (event) => {
-    console.log(data)
+    // console.log(data)
     const name = event.target.name
     const value =
       event.target.type === "checkbox" ? event.target.checked : event.target.value;
@@ -109,7 +109,7 @@ function EventsEditPage(props) {
         <Datetime dateFormat="DD.MM.YYYY" value={data.end} name="end" onChange={handleInputDateEnd} />
 
         <label>Kurs</label><br/>
-        <select value={data.course_id}>
+        <select value={data.course_id} onChange={handleInput} name="courseId" >
           <option value={null}>--</option>
           {courses.map((val)=> <option value={val.id}>{val.title}</option>)}
         </select>
