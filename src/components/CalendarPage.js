@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner'
 
 import moment from 'moment'
 
-import { fetchEvents, updateEvent } from '../services'
+import { fetchEvents, updateEvent, createEvent } from '../services'
 import 'react-datetime/css/react-datetime.css'
 import 'react-big-calendar/lib/sass/styles.scss'
 // import 'react-big-calendar/lib/addons/dragAndDrop/styles.scss'
@@ -25,10 +25,16 @@ const localizer = momentLocalizer(moment)
 
 export const CalendarPage = props => {
 
-  const [ isModalVisible, setIsModalVisible ] = useState(0)
+  const [ isModalVisible, setIsModalVisible ] = useState(false)
+  const [ isModalCreateVisible, setIsModalCreateVisible ] = useState(false)
   const [ dataId, setDataId ] = useState(0)
   const [ data, setData ] = useState({events:[]})
   const [isLoading, setIsLoading] = useState(true);
+  const [ newEvt, setNewEvt ] = useState({
+    start:0,
+    end:0,
+    title:'',
+  })
 
   // const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
 
@@ -66,19 +72,50 @@ export const CalendarPage = props => {
   const showEvtDia = (e, evt) => {
     console && console.log(data)
     setDataId(evt.id)
-    setIsModalVisible(1)
+    setIsModalVisible(true)
     // isModalVisible,
     console && console.log(e, evt)
   }
 
-  const handleCloseModal = () => {
-    setIsModalVisible(0)
+  const showCreateEvtDia = ({start, end}) => {
+    // console && console.log(evt)
+    // setDataId(evt.id)
+    let title = "new..."
+    setNewEvt({
+      start,
+      end,
+      title,
+    })
+    setIsModalCreateVisible(true)
+    // preview ...
+    setData({
+      events: [
+        ...data.events,
+        {
+          start,
+          end,
+          title,
+        },
+      ],
+    })
   }
 
+  const handleCloseModal = () => {
+    setIsModalVisible(false)
+    setIsModalCreateVisible(false)
+  }
+
+  const handleSaveModalCreate = (dataId) => {
+    // console.log(eventById(dataId)
+    createEvent(newEvt)
+    setIsModalCreateVisible(false)
+  }
+
+
   const handleSaveModal = (dataId) => {
-    // console.log(eventById(dataId))
+    // console.log(eventById(dataId)
     updateEvent(eventById(dataId))
-    setIsModalVisible(0)
+    setIsModalVisible(false)
   }
 
   const form = (evt) => {
@@ -101,21 +138,6 @@ export const CalendarPage = props => {
     </>
   }
 
-  const handleSelect = ({ start, end }) => {
-    // createEvent
-    const title = window.prompt('Event name')
-    if (title)
-      setData({
-        events: [
-          ...data.events,
-          {
-            start,
-            end,
-            title,
-          },
-        ],
-      })
-  }
 
   const eventById = (id) => {
     return data.events.find(item => item.id === id)
@@ -136,7 +158,7 @@ export const CalendarPage = props => {
       culture='de'
       selectable
       onSelectEvent={(evt, e)=> showEvtDia(e, evt)}
-      onSelectSlot={handleSelect}
+      onSelectSlot={(evt) => showCreateEvtDia(evt)}
       // views={allViews}
       // step={60}
       // showMultiDayTimes
@@ -160,6 +182,32 @@ export const CalendarPage = props => {
         </Button>
       </Modal.Footer>
       </Modal>
+
+
+      <Modal show={isModalCreateVisible} onHide={handleCloseModal}>
+      <Modal.Header closeButton>
+        <Modal.Title>{newEvt.title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{
+      (isModalCreateVisible &&
+        <>
+          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.start}  />
+          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.end}  />
+        </>
+
+      )}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={() => { handleSaveModalCreate() }} >
+          Save Changes
+        </Button>
+      </Modal.Footer>
+      </Modal>
+
+
+
     </div>
    : <Spinner animation="border" role="status">
       <span className="sr-only">Loading...</span>
