@@ -87,7 +87,7 @@ export const CalendarPage = props => {
       title,
     })
     setIsModalCreateVisible(true)
-    // preview ...
+    // todo preview?s
     setData({
       events: [
         ...data.events,
@@ -105,14 +105,41 @@ export const CalendarPage = props => {
     setIsModalCreateVisible(false)
   }
 
-  const handleSaveModalCreate = (dataId) => {
+  const handleSaveCreateModal = (dataId) => {
     // console.log(eventById(dataId)
     createEvent(newEvt)
     setIsModalCreateVisible(false)
   }
 
+  const handleInputDateStart = (event) => {
+    setNewEvt({
+      ...newEvt,
+      'start': event,
+    })
+  }
 
-  const handleSaveModal = (dataId) => {
+  const handleInputDateEnd = (event) => {
+    setNewEvt({
+      ...newEvt,
+      'end': event,
+    })
+  }
+
+  const handleInputDate = (event, name) => {
+    // see https://momentjs.com/docs/#/displaying/
+    let value = event
+    // if (event.format) {
+    //   value = event.format();
+    // }
+    setData({
+      ...data,
+      [name]: value
+    })
+    // setIsMutated(true)
+  }
+
+
+  const handleSaveUpdateModal = (dataId) => {
     // console.log(eventById(dataId)
     updateEvent(eventById(dataId))
     setIsModalVisible(false)
@@ -123,8 +150,8 @@ export const CalendarPage = props => {
     // console.log(evt.start) evt.start.toString()
     // resourceMap.map()
     return <>
-      Start: <Datetime dateFormat="DD.MM.YYYY" value={evt.start}  />
-      End: <Datetime dateFormat="DD.MM.YYYY" value={evt.end}  />
+      Start: <Datetime dateFormat="DD.MM.YYYY" value={evt.start}  onChange={(evt) => handleInputDate(evt, 'start')}   />
+      End: <Datetime dateFormat="DD.MM.YYYY" value={evt.end}  onChange={(evt) => handleInputDate(evt, 'end')}   />
       {/*
       Raum: <select>
       {resourceMap.map((room) => {
@@ -132,18 +159,18 @@ export const CalendarPage = props => {
         <option value={room.resourceId}>{room.resourceTitle}</option>
         :
         <option selected value={room.resourceId}>{room.resourceTitle}</option>
+
+
       })
       }</select>
        */}
     </>
   }
 
-
   const eventById = (id) => {
     return data.events.find(item => item.id === id)
   }
 
-  // (typeof data.events.results !== 'undefined') ?
   return (
     (!isLoading) ?
     // parent container of calendar-month-view requires a min-height
@@ -177,7 +204,7 @@ export const CalendarPage = props => {
         <Button variant="secondary" onClick={handleCloseModal}>
           Close
         </Button>
-        <Button variant="primary" onClick={() => { handleSaveModal(dataId) }} >
+        <Button variant="primary" onClick={() => { handleSaveUpdateModal(dataId) }} >
           Save Changes
         </Button>
       </Modal.Footer>
@@ -191,8 +218,8 @@ export const CalendarPage = props => {
       <Modal.Body>{
       (isModalCreateVisible &&
         <>
-          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.start}  />
-          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.end}  />
+          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.start}  onChange={handleInputDateStart}  />
+          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.end}  onChange={handleInputDateEnd} />
         </>
 
       )}</Modal.Body>
@@ -200,7 +227,7 @@ export const CalendarPage = props => {
         <Button variant="secondary" onClick={handleCloseModal}>
           Close
         </Button>
-        <Button variant="primary" onClick={() => { handleSaveModalCreate() }} >
+        <Button variant="primary" onClick={() => { handleSaveCreateModal() }} >
           Save Changes
         </Button>
       </Modal.Footer>

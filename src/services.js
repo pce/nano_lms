@@ -190,11 +190,19 @@ export const fetchEvents = async () => {
 }
 
 export async function createEvent(data) {
-  console.log(data)
+  // console.log(data)
   const url = `${API_URL}/events`
+  // moment or not ...
+  if (typeof data.start.format === 'function') {
+    data.start = data.start.format()
+  }
+  if (typeof data.end.format === 'function') {
+    data.end = data.end.format()
+  }
+
   return await axios.post(url, {
-      start: data.start.format(),
-      end: data.end.format(),
+      start: data.start,
+      end: data.end,
       title: data.title,
       courses_id: (typeof data.coursesId !== 'undefined') ? Number(data.coursesId) : null,
   }, {
