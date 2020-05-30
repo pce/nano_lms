@@ -55,6 +55,9 @@ export const CalendarPage = props => {
     return data
   }
 
+
+
+
   useEffect(() => {
     console.log("Calendar")
     fetchEvents().then(response => {
@@ -67,7 +70,7 @@ export const CalendarPage = props => {
       }
       setIsLoading(false)
     }).catch(e => console.log(e))
-  }, [])
+  }, [isLoading])
 
   const showEvtDia = (e, evt) => {
     console && console.log(data)
@@ -88,6 +91,7 @@ export const CalendarPage = props => {
     })
     setIsModalCreateVisible(true)
     // todo preview?s
+    /*
     setData({
       events: [
         ...data.events,
@@ -97,7 +101,7 @@ export const CalendarPage = props => {
           title,
         },
       ],
-    })
+    })*/
   }
 
   const handleCloseModal = () => {
@@ -109,6 +113,8 @@ export const CalendarPage = props => {
     // console.log(eventById(dataId)
     createEvent(newEvt)
     setIsModalCreateVisible(false)
+    // reload
+    setIsLoading(true)
   }
 
   const handleInputDateStart = (event) => {
@@ -138,6 +144,24 @@ export const CalendarPage = props => {
     // setIsMutated(true)
   }
 
+  const handleInput = (event) => {
+    // console.log(data)
+    const name = event.target.name
+    const value =
+      event.target.type === "checkbox" ? event.target.checked : event.target.value;
+
+    setNewEvt({
+      ...newEvt,
+      [name]: value,
+    })
+
+    // if name data_
+    // setData({
+    //   ...data,
+    //   [name]: value
+    // })
+    // setIsMutated(true)
+  }
 
   const handleSaveUpdateModal = (dataId) => {
     // console.log(eventById(dataId)
@@ -213,7 +237,9 @@ export const CalendarPage = props => {
 
       <Modal show={isModalCreateVisible} onHide={handleCloseModal}>
       <Modal.Header closeButton>
-        <Modal.Title>{newEvt.title}</Modal.Title>
+        <Modal.Title>
+          <input type="text" value={newEvt.title} name="title" onChange={handleInput} style={{width:'100%'}} /><br/>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>{
       (isModalCreateVisible &&
@@ -221,7 +247,6 @@ export const CalendarPage = props => {
           <Datetime dateFormat="DD.MM.YYYY" value={newEvt.start}  onChange={handleInputDateStart}  />
           <Datetime dateFormat="DD.MM.YYYY" value={newEvt.end}  onChange={handleInputDateEnd} />
         </>
-
       )}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseModal}>
