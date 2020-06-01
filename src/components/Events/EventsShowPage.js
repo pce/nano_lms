@@ -45,17 +45,14 @@ function EventsShowPage(props) {
    </Spinner>)) || (
         <Jumbotron>
           <h2>{data.event.title}</h2>
-          <p>{data.event.start}</p>
-          <p>{data.event.end}</p>
-        <p>{formatDateRange(data.event.start, data.event.end)}</p>
+          <p>{formatDateRange(data.event.start, data.event.end)}</p>
           <p>{((data.event.course_id) && data.event.course.title)}</p>
-
-        <p>
-          <br/>
-          <Button type="button" variant="secondary" onClick={() => { props.history.goBack() }}>Cancel</Button>&nbsp;
-          <Button type="button" variant="primary" onClick={() => { handleEditEvent(data.event.id) }}>Edit</Button>&nbsp;
-          <Button type="button" variant="danger" onClick={() => { if (window.confirm('Delete?')) handleDeleteEvent(data.event.id) }}>Delete</Button>
-        </p>
+          <p>
+            <br/>
+            <Button type="button" variant="secondary" onClick={() => { props.history.goBack() }}>Cancel</Button>&nbsp;
+            <Button type="button" variant="primary" onClick={() => { handleEditEvent(data.event.id) }}>Edit</Button>&nbsp;
+            <Button type="button" variant="danger" onClick={() => { if (window.confirm('Delete?')) handleDeleteEvent(data.event.id) }}>Delete</Button>
+          </p>
          </Jumbotron>)}
         </Col>
       </Row>
