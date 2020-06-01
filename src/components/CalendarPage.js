@@ -12,7 +12,6 @@ import 'react-datetime/css/react-datetime.css'
 import 'react-big-calendar/lib/sass/styles.scss'
 // import 'react-big-calendar/lib/addons/dragAndDrop/styles.scss'
 
-
 const localizer = momentLocalizer(moment)
 
 // const resourceMap = [
@@ -36,8 +35,6 @@ export const CalendarPage = props => {
     title:'',
   })
 
-  // const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
-
   const convertDates = (data) => {
     const reviver = (key, value) => {
       let startDate = new Date(key['start'])
@@ -55,9 +52,6 @@ export const CalendarPage = props => {
     return data
   }
 
-
-
-
   useEffect(() => {
     console.log("Calendar")
     fetchEvents().then(response => {
@@ -73,16 +67,14 @@ export const CalendarPage = props => {
   }, [isLoading])
 
   const showEvtDia = (e, evt) => {
-    console && console.log(data)
+    // console && console.log(data)
     setDataId(evt.id)
     setIsModalVisible(true)
     // isModalVisible,
-    console && console.log(e, evt)
+    // console && console.log(e, evt)
   }
 
   const showCreateEvtDia = ({start, end}) => {
-    // console && console.log(evt)
-    // setDataId(evt.id)
     let title = "new..."
     setNewEvt({
       start,
@@ -90,18 +82,6 @@ export const CalendarPage = props => {
       title,
     })
     setIsModalCreateVisible(true)
-    // todo preview?s
-    /*
-    setData({
-      events: [
-        ...data.events,
-        {
-          start,
-          end,
-          title,
-        },
-      ],
-    })*/
   }
 
   const handleCloseModal = () => {
@@ -183,8 +163,6 @@ export const CalendarPage = props => {
         <option value={room.resourceId}>{room.resourceTitle}</option>
         :
         <option selected value={room.resourceId}>{room.resourceTitle}</option>
-
-
       })
       }</select>
        */}
@@ -234,7 +212,6 @@ export const CalendarPage = props => {
       </Modal.Footer>
       </Modal>
 
-
       <Modal show={isModalCreateVisible} onHide={handleCloseModal}>
       <Modal.Header closeButton>
         <Modal.Title>
@@ -257,8 +234,6 @@ export const CalendarPage = props => {
         </Button>
       </Modal.Footer>
       </Modal>
-
-
 
     </div>
    : <Spinner animation="border" role="status">
