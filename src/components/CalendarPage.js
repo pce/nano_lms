@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-import Datetime from 'react-datetime'
 import Spinner from 'react-bootstrap/Spinner'
+import DatePicker from "react-datepicker"
 
 import moment from 'moment'
 
 import { fetchEvents, updateEvent, createEvent } from '../services'
-import 'react-datetime/css/react-datetime.css'
+
+
 import 'react-big-calendar/lib/sass/styles.scss'
 // import 'react-big-calendar/lib/addons/dragAndDrop/styles.scss'
 
@@ -20,7 +21,6 @@ const localizer = momentLocalizer(moment)
 //   { resourceId: 3, resourceTitle: 'Raum Oben' },
 //   // { resourceId: 4, resourceTitle: 'Raum 4' },
 // ]
-
 
 export const CalendarPage = props => {
 
@@ -154,8 +154,34 @@ export const CalendarPage = props => {
     // console.log(evt.start) evt.start.toString()
     // resourceMap.map()
     return <>
-      Start: <Datetime dateFormat="DD.MM.YYYY" value={evt.start}  onChange={(evt) => handleInputDate(evt, 'start')}   />
+
+      Start:
+      <DatePicker
+        name="start"
+        selected={evt.start}
+        onChange={(evt) => handleInputDate(evt, 'start')}
+        showTimeSelect
+        timeFormat="HH:mm"
+        timeIntervals={15}
+        timeCaption="time"
+        dateFormat="MMMM d, yyyy HH:mm"
+      />
+
+      Ende:
+      <DatePicker
+        name="end"
+        selected={evt.end}
+        onChange={(evt) => handleInputDate(evt, 'end')}
+        showTimeSelect
+        timeFormat="HH:mm"
+        timeIntervals={15}
+        timeCaption="time"
+        dateFormat="MMMM d, yyyy HH:mm"
+      />
+
+      {/* Start: <Datetime dateFormat="DD.MM.YYYY" value={evt.start}  onChange={(evt) => handleInputDate(evt, 'start')}   />
       End: <Datetime dateFormat="DD.MM.YYYY" value={evt.end}  onChange={(evt) => handleInputDate(evt, 'end')}   />
+       */}
       {/*
       Raum: <select>
       {resourceMap.map((room) => {
@@ -221,8 +247,33 @@ export const CalendarPage = props => {
       <Modal.Body>{
       (isModalCreateVisible &&
         <>
-          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.start}  onChange={handleInputDateStart}  />
-          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.end}  onChange={handleInputDateEnd} />
+          {/* <Datetime dateFormat="DD.MM.YYYY" value={newEvt.start}  onChange={handleInputDateStart}  />
+          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.end}  onChange={handleInputDateEnd} /> */}
+
+      Start:
+      <DatePicker
+        name="start"
+        selected={newEvt.start}
+        onChange={handleInputDateStart}
+        showTimeSelect
+        timeFormat="HH:mm"
+        timeIntervals={15}
+        timeCaption="time"
+        dateFormat="MMMM d, yyyy HH:mm"
+      />
+
+      Ende:
+      <DatePicker
+        name="end"
+        selected={newEvt.end}
+        onChange={handleInputDateEnd}
+        showTimeSelect
+        timeFormat="HH:mm"
+        timeIntervals={15}
+        timeCaption="time"
+        dateFormat="MMMM d, yyyy HH:mm"
+      />
+
         </>
       )}</Modal.Body>
       <Modal.Footer>

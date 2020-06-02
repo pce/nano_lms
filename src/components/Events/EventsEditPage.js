@@ -5,11 +5,14 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Datetime from 'react-datetime'
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 import { withRouter } from 'react-router-dom'
 
 import { fetchEvent, updateEvent, createEvent, fetchCourses } from '../../services'
+
 
 function EventsEditPage(props) {
   const [data, setData] = useState({
@@ -29,6 +32,10 @@ function EventsEditPage(props) {
     }
     fetchEvent(props.match.params.id).then((response)=>{
       console.log(response.data)
+
+      response.data.event.start = new Date(response.data.event.start)
+      response.data.event.end = new Date(response.data.event.end)
+
       setData(response.data.event)
       setIsLoading(false)
     })
@@ -102,12 +109,36 @@ function EventsEditPage(props) {
       <Jumbotron>
         <label>title</label><br/>
         <input type="text" value={data.title} name="title" onChange={handleInput} style={{width:'100%'}} /><br/>
+
         <label>start</label><br/>
-        <Datetime dateFormat="DD.MM.YYYY" value={data.start} name="start" onChange={handleInputDateStart}  />
 
-        <label>end</label><br/>
-        <Datetime dateFormat="DD.MM.YYYY" value={data.end} name="end" onChange={handleInputDateEnd} />
+        <DatePicker
+          name="end"
+          selected={data.start}
+          onChange={handleInputDateStart}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          timeCaption="time"
+          dateFormat="MMMM d, yyyy HH:mm"
+        />
 
+        <br/>
+        <label>end</label>
+        <br/>
+
+        <DatePicker
+          name="end"
+          selected={data.end}
+          onChange={handleInputDateEnd}
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          timeCaption="time"
+          dateFormat="MMMM d, yyyy HH:mm"
+        />
+
+          <br/>
         <label>Kurs</label><br/>
         <select value={data.course_id} onChange={handleInput} name="courseId" >
           <option value={null}>--</option>
