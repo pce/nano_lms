@@ -91,7 +91,10 @@ export async function updateUser(id, data) {
 //#region courses
 
 export async function fetchCourses(page=1) {
-  const url = `${API_URL}/courses?page=${page}`
+  let url = `${API_URL}/courses?`
+  if (null !== page) {
+    url += `page=${page}`
+  }
   return await axios.get(url, {
     headers: {
       'AUTH-TOKEN': getToken()

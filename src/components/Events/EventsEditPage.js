@@ -32,7 +32,7 @@ function EventsEditPage(props) {
       setData(response.data.event)
       setIsLoading(false)
     })
-    fetchCourses().then((response) => {
+    fetchCourses(null).then((response) => {
       // console.log(response.data)
       setCourses(response.data.courses)
       setIsLoading(false)
