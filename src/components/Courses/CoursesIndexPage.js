@@ -74,7 +74,7 @@ const CoursesIndexPage = (props) => {
 
   // todo: prepare pager vars for more than 10 pages (with <Pagination.Ellipsis />)
   // total > 10, from: (total / 2) +5, to: (total / 2) +5,
-  const pagerItems = new Array(data.pager.total_pages).fill(1)
+  const pagerItems = new Array(data.pager.last).fill(1)
 
   return <Container  style={{marginTop:'2em'}}>
     <Row>
@@ -93,19 +93,19 @@ const CoursesIndexPage = (props) => {
         <Col>
           <Pagination onClick={pageChanged}>
             <Pagination.First href="courses?page=1"/>
-            {((data.pager && data.pager.prev_page) &&
-              <Pagination.Prev value="1" href={`courses?page=${data.pager.prev_page}`} />
+            {((data.pager && data.pager.prev) &&
+              <Pagination.Prev value="1" href={`courses?page=${data.pager.prev}`} />
             )}
             {pagerItems.map((item, key)=>{
               let page = key +1
-              return (data.pager.current_page === page) ?
+              return (data.pager.page === page) ?
                 <Pagination.Item active>{page}</Pagination.Item> :
                 <Pagination.Item href={`courses?page=${page}`}>{page}</Pagination.Item>
             })}
-            {((data.pager && data.pager.next_page) &&
-              <Pagination.Next value="1" href={`courses?page=${data.pager.next_page}`} />
+            {((data.pager && data.pager.next) &&
+              <Pagination.Next value="1" href={`courses?page=${data.pager.next}`} />
             )}
-            <Pagination.Last href={`courses?page=${data.pager.total_pages}`}/>
+            <Pagination.Last href={`courses?page=${data.pager.last}`}/>
           </Pagination>
         </Col>
       </Row>
