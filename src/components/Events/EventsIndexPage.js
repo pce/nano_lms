@@ -21,11 +21,10 @@ const EventsIndexPage = (props) => {
 
   useEffect(() => {
     fetchEvents(orderBy, orderDir).then((response)=>{
-      console.log(response.data)
+      // console.log(response.data)
       setData(response.data.events)
       setIsLoading(false)
     })
-  //  }, []);
   }, [orderBy, orderDir]);
 
   const handleSort = (col) => {
@@ -47,8 +46,8 @@ const EventsIndexPage = (props) => {
         <thead>
           <tr>
             {/* <th>#</th> */}
-            <th onClick={() => handleSort('title')}  > Name  </th>
-            <th onClick={() => handleSort('start')}  > Datum </th>
+            <th onClick={() => handleSort('title')}  >{orderBy==='title' && (orderDir?'▲':'▼')}  Name  </th>
+            <th onClick={() => handleSort('start')}  >{orderBy==='start' && (orderDir?'▲':'▼')}  Datum </th>
             <th>Kurs</th>
           </tr>
         </thead>
