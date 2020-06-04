@@ -176,9 +176,11 @@ export async function fetchEvent(id) {
   })
 }
 
-export const fetchEvents = async () => {
+export const fetchEvents = async (orderBy="start", orderDir=true) => {
   let data = {}
-  const result = await axios.get(`${API_URL}/events`, {
+  let url = `${API_URL}/events`
+  if (orderBy) url = `${url}?order_by=${orderBy}&order_dir=${orderDir?'desc':'asc'}`
+  const result = await axios.get(url, {
     headers: {
       'AUTH-TOKEN': getToken()
     }
