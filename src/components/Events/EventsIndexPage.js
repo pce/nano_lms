@@ -16,14 +16,22 @@ const EventsIndexPage = (props) => {
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [orderDir, setOrderDir] = useState(true)
+  const [orderBy, setOrderBy] = useState('start')
 
   useEffect(() => {
-    fetchEvents().then((response)=>{
+    fetchEvents(orderBy, orderDir).then((response)=>{
       console.log(response.data)
       setData(response.data.events)
       setIsLoading(false)
     })
-   }, []);
+  //  }, []);
+  }, [orderBy, orderDir]);
+
+  const handleSort = (col) => {
+    setOrderDir(!orderDir)
+    setOrderBy(col)
+  }
 
   const handleAddCourse = () => {
     props.history.push('events/create')
@@ -39,8 +47,8 @@ const EventsIndexPage = (props) => {
         <thead>
           <tr>
             {/* <th>#</th> */}
-            <th>Name</th>
-            <th>Datum</th>
+            <th onClick={() => handleSort('title')}  > Name  </th>
+            <th onClick={() => handleSort('start')}  > Datum </th>
             <th>Kurs</th>
           </tr>
         </thead>
