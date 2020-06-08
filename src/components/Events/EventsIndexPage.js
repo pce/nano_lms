@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Table from 'react-bootstrap/Table'
 import { withRouter } from 'react-router-dom'
 import { LinkContainer } from "react-router-bootstrap"
+import { Link } from "react-router-dom"
 
 import { fetchEvents } from '../../services'
 import {formatDateRange } from '../../utils'
@@ -76,6 +77,10 @@ const EventsIndexPage = (props) => {
         </Table>
         </Col>
       </Row>
+      <Link to={{
+        pathname: "/pdf/events",
+        data: data,
+        }} > PDF </Link>
     </Container>
   : <Spinner animation="border" role="status">
   <span className="sr-only">Loading...</span>

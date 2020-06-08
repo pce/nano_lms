@@ -6,6 +6,7 @@ import {
 import EventsIndexPage from './components/Events/EventsIndexPage';
 import EventsEditPage from './components/Events/EventsEditPage';
 import EventsShowPage from './components/Events/EventsShowPage';
+import EventsPrintPage from './components/Events/EventsPrintPage';
 import CoursesIndexPage from './components/Courses/CoursesIndexPage';
 import CoursesShowPage  from './components/Courses/CoursesShowPage';
 import CoursesEditPage  from './components/Courses/CoursesEditPage';
@@ -67,6 +68,9 @@ function App() {
         <LayoutAdmin doSignOut={doSignOut}>
           <DashboardPage />
         </LayoutAdmin>
+       </Route>
+       <Route exact path="/pdf/events">
+          <EventsPrintPage />
        </Route>
        <Route exact path="/events">
         <LayoutAdmin doSignOut={doSignOut}>
