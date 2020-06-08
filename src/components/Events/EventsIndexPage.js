@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom'
 import { LinkContainer } from "react-router-bootstrap"
 import { Link } from "react-router-dom"
 
-import { fetchEvents } from '../../services'
+import { fetchEvents, fetchCourses } from '../../services'
 import {formatDateRange } from '../../utils'
 
 
@@ -19,14 +19,26 @@ const EventsIndexPage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderDir, setOrderDir] = useState(true)
   const [orderBy, setOrderBy] = useState('start')
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [courseIds, setCourseIds] = useState([])
+  const [courses, setCourses] = useState([])
 
   useEffect(() => {
-    fetchEvents(orderBy, orderDir).then((response)=>{
+    fetchCourses(null).then((response) => {
+      // console.log(response.data)
+      setCourses(response.data.courses)
+    })
+  }, []);
+
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetchEvents(orderBy, orderDir, courseIds).then((response)=>{
       // console.log(response.data)
       setData(response.data.events)
       setIsLoading(false)
     })
-  }, [orderBy, orderDir]);
+  }, [orderBy, orderDir, courseIds]);
 
   const handleSort = (col) => {
     setOrderDir(!orderDir)
@@ -37,19 +49,55 @@ const EventsIndexPage = (props) => {
     props.history.push('events/create')
   }
 
+  const handleSelectCourses = (e) => {
+    let newVal = e.target.value
+    let _courseIds = [...courseIds]
+    if (_courseIds.indexOf(newVal) === -1) {
+      _courseIds.push(newVal)
+    } else {
+      if (_courseIds.length === 1) {
+        _courseIds = []
+      } else {
+        _courseIds.splice(_courseIds.indexOf(newVal), 1)
+      }
+    }
+    // setFilterQueue -> onApply:
+    setCourseIds(_courseIds)
+  }
+
   return (!isLoading) ?
     <Container  style={{marginTop:'2em'}}>
     <Row>
       <Col>
         <h1>Termine</h1>
-        {((sessionStorage.getItem('admin_role')) && (<Button type="button" variant="primary" onClick={() => { handleAddCourse() }}>Add</Button>))}
+        <Row>
+          <Col>
+            {((sessionStorage.getItem('admin_role')) && (<Button type="button" variant="primary" onClick={() => { handleAddCourse() }}>Add</Button>))}
+          </Col>
+          <Col>
+            <Button type="button" variant="secondary" onClick={() => { setIsFilterVisible(!isFilterVisible) }} style={{float:'right'}}>Filter </Button>
+          </Col>
+        </Row>
+
+        {isFilterVisible && (
+          <Row style={{backgroundColor:'#eff', padding:'10px'}}>
+          <Col>
+          <label>Kurs</label><br/>
+          <select size='7' multiple value={courseIds} onChange={handleSelectCourses} name="courseIds" >
+            <option value="nil">--</option>
+            {courses.map((val) => <option value={val.id}  >{val.title}</option>)}
+          </select>
+          </Col>
+        </Row>
+        )}
+
         <Table striped bordered hover size="sm" style={{marginTop:'8px'}}>
         <thead>
           <tr>
             {/* <th>#</th> */}
             <th onClick={() => handleSort('title')}  >{orderBy==='title' && (orderDir?'▲':'▼')}  Name  </th>
             <th onClick={() => handleSort('start')}  >{orderBy==='start' && (orderDir?'▲':'▼')}  Datum </th>
-            <th>Kurs</th>
+            <th onClick={() => handleSort('course_id')} >{orderBy==='course_id' && (orderDir?'▲':'▼')}  Kurs</th>
           </tr>
         </thead>
         <tbody>
@@ -80,7 +128,8 @@ const EventsIndexPage = (props) => {
       <Link to={{
         pathname: "/pdf/events",
         data: data,
-        }} > PDF </Link>
+        }}
+      > PDF </Link>
     </Container>
   : <Spinner animation="border" role="status">
   <span className="sr-only">Loading...</span>

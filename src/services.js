@@ -176,18 +176,22 @@ export async function fetchEvent(id) {
   })
 }
 
-export const fetchEvents = async (orderBy="start", orderDir=true) => {
+export const fetchEvents = async (orderBy="start", orderDir=true, courseIds=null, q=null) => {
+  console.log('@fetchEvents courseIds:')
+  console.log(courseIds)
   let data = {}
-  let url = `${API_URL}/events`
-  if (orderBy) url = `${url}?order_by=${orderBy}&order_dir=${orderDir?'desc':'asc'}`
+  let url = `${API_URL}/events?`
+  if (orderBy) url += `order_by=${orderBy}&order_dir=${orderDir?'desc':'asc'}`
+  if (courseIds && courseIds.length) url += `&c[]=${courseIds.join('&c[]=')}`
+  if (q) url += `&q=${q}`
   const result = await axios.get(url, {
     headers: {
       'AUTH-TOKEN': getToken()
     }
   })
   .then(response => {
-    console.log('response:')
-    console.log(response)
+    // console.log('response:')
+    // console.log(response)
     data = response.data
     return data
   }).catch(error => console.log(error))
