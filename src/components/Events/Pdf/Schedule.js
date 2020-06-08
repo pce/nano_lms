@@ -8,10 +8,16 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   itemDatetime: {
+    backgroundColor: '#fff',
+    marginRight: '5px',
+    padding: '5px',
     width: 150,
     fontSize: 10,
   },
   itemTitle: {
+    backgroundColor: '#fff',
+    marginRight: '5px',
+    padding: '5px',
     flex: 1,
     fontSize: 10,
   },

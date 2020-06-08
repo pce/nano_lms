@@ -7,16 +7,25 @@ import {formatDateRange } from '../../../utils'
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'row',
-    backgroundColor: '#E4E4E4'
+    backgroundColor: '#fff'
   },
   section: {
+    backgroundColor: '#eef',
     margin: 10,
     padding: 10,
     flexGrow: 1
+  },
+  text: {
+    // backgroundColor: '#fff',
   }
 });
 
-// TODO by course, month ?
+
+const fetchData = () => {
+  // placeholder for static data or by params in the future
+  return []
+}
+
 
 const EventEntries = ({events}) => (
   <View>
@@ -31,16 +40,16 @@ const EventEntries = ({events}) => (
 
 // Create Document Component
 const Doc = (props) => {
-
+  const events = (props.data && props.data.length) ? props.data : fetchData()
   console.log(props.data)
   return <Document>
-    <Page size="A4" style={styles.page}>
+    <Page size="A4" wrap={true} orientation='portrait' style={styles.page}>
       <View style={styles.section}>
-        <Text>Termine</Text>
-        <Text> </Text>
-        <EventEntries events={props.data} />
+        <Text style={styles.text}>Termine</Text>
+        <Text > </Text>
+        {/* split 30 items per page*/}
+        <EventEntries events={events} />
       </View>
-
     </Page>
   </Document>
 }
