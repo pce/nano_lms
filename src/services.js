@@ -177,8 +177,8 @@ export async function fetchEvent(id) {
 }
 
 export const fetchEvents = async (orderBy="start", orderDir=true, courseIds=null, q=null) => {
-  console.log('@fetchEvents courseIds:')
-  console.log(courseIds)
+  // console.log('@fetchEvents courseIds:')
+  // console.log(courseIds)
   let data = {}
   let url = `${API_URL}/events?`
   if (orderBy) url += `order_by=${orderBy}&order_dir=${orderDir?'desc':'asc'}`

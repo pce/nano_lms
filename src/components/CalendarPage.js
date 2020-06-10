@@ -53,10 +53,10 @@ export const CalendarPage = props => {
   }
 
   useEffect(() => {
-    console.log("Calendar")
+    // console.log("Calendar")
     fetchEvents().then(response => {
-      console.log('response.data')
-      console.log(response.data.events)
+      // console.log('response.data')
+      // console.log(response.data.events)
       if (response.data) {
         let data = convertDates(response.data)
         // let data = response.data
@@ -214,6 +214,23 @@ export const CalendarPage = props => {
       selectable
       onSelectEvent={(evt, e)=> showEvtDia(e, evt)}
       onSelectSlot={(evt) => showCreateEvtDia(evt)}
+      onRangeChange={(evt) => {
+          // console.log('onRangeChange')
+          // console.log(evt)
+          // TODO setDateRange(evt.start, evt.end)
+        }
+      }
+      // onNavigate={(evt) => {
+      //     console.log('onNavigate')
+      //     console.log(evt)
+      //   }
+      // }
+      // onView={(evt) => {
+      //     console.log('onView')
+      //     console.log(evt)
+      //   }
+      // }
+
       // views={allViews}
       // step={60}
       // showMultiDayTimes

@@ -138,7 +138,7 @@ function EventsEditPage(props) {
           dateFormat="MMMM d, yyyy HH:mm"
         />
 
-          <br/>
+        <br/>
         <label>Kurs</label><br/>
         <select value={data.course_id} onChange={handleInput} name="courseId" >
           <option value={null}>--</option>
