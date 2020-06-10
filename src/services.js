@@ -198,6 +198,26 @@ export const fetchEvents = async (orderBy="start", orderDir=true, courseIds=null
   return result
 }
 
+export const fetchEventsInRange = async (start=null, end=null) => {
+  console.log('@fetchEventsInRange:')
+  console.log(start, end)
+  let data = {}
+  let url = `${API_URL}/events?`
+  if (start && end) url += `&start=${start}&end=${end}`
+  const result = await axios.get(url, {
+    headers: {
+      'AUTH-TOKEN': getToken()
+    }
+  })
+  .then(response => {
+    // console.log('response:')
+    // console.log(response)
+    data = response.data
+    return data
+  }).catch(error => console.log(error))
+  return result
+}
+
 export async function createEvent(data) {
   // console.log(data)
   const url = `${API_URL}/events`

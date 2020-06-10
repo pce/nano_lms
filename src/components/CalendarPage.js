@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker"
 
 import moment from 'moment'
 
-import { fetchEvents, updateEvent, createEvent } from '../services'
+import { fetchEventsInRange, updateEvent, createEvent } from '../services'
 
 
 import 'react-big-calendar/lib/sass/styles.scss'
@@ -28,6 +28,7 @@ export const CalendarPage = props => {
   const [ isModalCreateVisible, setIsModalCreateVisible ] = useState(false)
   const [ dataId, setDataId ] = useState(0)
   const [ data, setData ] = useState({events:[]})
+  const [ dateRange, setDateRange ] = useState({start:null,end:null})
   const [isLoading, setIsLoading] = useState(true);
   const [ newEvt, setNewEvt ] = useState({
     start:0,
@@ -54,7 +55,11 @@ export const CalendarPage = props => {
 
   useEffect(() => {
     // console.log("Calendar")
-    fetchEvents().then(response => {
+    // -7 days or now -
+    let start = dateRange.start && dateRange.start.toISOString() || moment().startOf('month').subtract(6, 'days').format('YYYY-MM-DD hh:mm');
+    let end = dateRange.end && dateRange.end.toISOString() || moment().endOf('month').add(6, 'days').format('YYYY-MM-DD hh:mm');
+
+    fetchEventsInRange(start, end).then(response => {
       // console.log('response.data')
       // console.log(response.data.events)
       if (response.data) {
@@ -64,7 +69,7 @@ export const CalendarPage = props => {
       }
       setIsLoading(false)
     }).catch(e => console.log(e))
-  }, [isLoading])
+  }, [isLoading, dateRange])
 
   const showEvtDia = (e, evt) => {
     // console && console.log(data)
@@ -179,9 +184,6 @@ export const CalendarPage = props => {
         dateFormat="MMMM d, yyyy HH:mm"
       />
 
-      {/* Start: <Datetime dateFormat="DD.MM.YYYY" value={evt.start}  onChange={(evt) => handleInputDate(evt, 'start')}   />
-      End: <Datetime dateFormat="DD.MM.YYYY" value={evt.end}  onChange={(evt) => handleInputDate(evt, 'end')}   />
-       */}
       {/*
       Raum: <select>
       {resourceMap.map((room) => {
@@ -217,7 +219,7 @@ export const CalendarPage = props => {
       onRangeChange={(evt) => {
           // console.log('onRangeChange')
           // console.log(evt)
-          // TODO setDateRange(evt.start, evt.end)
+          setDateRange({start:evt.start, end:evt.end})
         }
       }
       // onNavigate={(evt) => {
@@ -264,33 +266,29 @@ export const CalendarPage = props => {
       <Modal.Body>{
       (isModalCreateVisible &&
         <>
-          {/* <Datetime dateFormat="DD.MM.YYYY" value={newEvt.start}  onChange={handleInputDateStart}  />
-          <Datetime dateFormat="DD.MM.YYYY" value={newEvt.end}  onChange={handleInputDateEnd} /> */}
+          Start:
+          <DatePicker
+            name="start"
+            selected={newEvt.start}
+            onChange={handleInputDateStart}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            timeCaption="time"
+            dateFormat="MMMM d, yyyy HH:mm"
+          />
 
-      Start:
-      <DatePicker
-        name="start"
-        selected={newEvt.start}
-        onChange={handleInputDateStart}
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        timeCaption="time"
-        dateFormat="MMMM d, yyyy HH:mm"
-      />
-
-      Ende:
-      <DatePicker
-        name="end"
-        selected={newEvt.end}
-        onChange={handleInputDateEnd}
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={15}
-        timeCaption="time"
-        dateFormat="MMMM d, yyyy HH:mm"
-      />
-
+          Ende:
+          <DatePicker
+            name="end"
+            selected={newEvt.end}
+            onChange={handleInputDateEnd}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            timeCaption="time"
+            dateFormat="MMMM d, yyyy HH:mm"
+          />
         </>
       )}</Modal.Body>
       <Modal.Footer>
