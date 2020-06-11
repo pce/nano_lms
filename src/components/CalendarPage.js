@@ -31,7 +31,7 @@ export const CalendarPage = props => {
   const [ dateRange, setDateRange ] = useState({start:null,end:null})
   const [isLoading, setIsLoading] = useState(true);
   const [ newEvt, setNewEvt ] = useState({
-    start:0,
+    start:new Date(),
     end:0,
     title:'',
   })
@@ -55,9 +55,11 @@ export const CalendarPage = props => {
 
   useEffect(() => {
     // console.log("Calendar")
-    // -7 days or now -
-    let start = dateRange.start && dateRange.start.toISOString() || moment().startOf('month').subtract(6, 'days').format('YYYY-MM-DD hh:mm');
-    let end = dateRange.end && dateRange.end.toISOString() || moment().endOf('month').add(6, 'days').format('YYYY-MM-DD hh:mm');
+    // the range of the calendar or current month (with offset)
+    let start = (dateRange.start && dateRange.start.toISOString()) ||
+      moment().startOf('month').subtract(6, 'days').format('YYYY-MM-DD hh:mm')
+    let end = (dateRange.end && dateRange.end.toISOString()) ||
+      moment().endOf('month').add(6, 'days').format('YYYY-MM-DD hh:mm')
 
     fetchEventsInRange(start, end).then(response => {
       // console.log('response.data')
@@ -94,11 +96,23 @@ export const CalendarPage = props => {
     setIsModalCreateVisible(false)
   }
 
-  const handleSaveCreateModal = (dataId) => {
-    // console.log(eventById(dataId)
+  const handleSaveCreateModal = () => {
+    if (!newEvt.title.length) {
+      // todo remove alert
+      alert('No Title given')
+      return false
+    }
+    if (typeof newEvt.start.format === 'function'
+      && typeof newEvt.end.format === 'function'
+      && newEvt.start.format('X') > newEvt.end.format('X')) {
+        // todo remove alert
+        alert('The End is not after Start')
+        return false
+    }
     createEvent(newEvt)
     setIsModalCreateVisible(false)
-    // reload
+    // workarround to reload to current view and daterange
+    // newEvt.start is Calendars defaultdate
     setIsLoading(true)
   }
 
@@ -207,6 +221,7 @@ export const CalendarPage = props => {
     <div style={{ height: '100%', minHeight: 600, padding:'10px' }}>
 
     <Calendar
+      defaultDate={newEvt.start}
       localizer={localizer}
       events={data.events}
       startAccessor="start"
