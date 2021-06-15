@@ -76,11 +76,14 @@ const CoursesIndexPage = (props) => {
   // total > 10, from: (total / 2) +5, to: (total / 2) +5,
   const pagerItems = new Array(data.pager.last).fill(1)
 
+  const isAdmin = (sessionStorage.getItem('admin_role') === 'true');
+
+
   return <Container  style={{marginTop:'2em'}}>
     <Row>
       <Col>
         <h1>Kurse</h1>
-        {((sessionStorage.getItem('admin_role')) && (
+        {(isAdmin && (
           <><Button type="button" variant="primary" onClick={() => { handleAddCourse() }}>Add</Button>
           {listAsCards()}
           </>

@@ -34,21 +34,22 @@ function App() {
   const doSignIn = (data) => {
     // e.preventDefault()
     signIn(data).then(response => {
-      // console.log(response)
+      console.log(response)
       if (response && response.is_success) {
         setIsAuthenticated(true)
         // user.authentication_token
         sessionStorage.setItem('token', response.data.user.authentication_token)
-        sessionStorage.setItem('user_role', response.data.user.user_role)
-        sessionStorage.setItem('admin_role', response.data.user.admin_role)
-        // sessionStorage.setItem('supervisor_role', response.data.supervisor_role)
+        // resources are protected serverside  
+        sessionStorage.setItem('user_role', Boolean(response.data.user.user_role))
+        sessionStorage.setItem('admin_role', Boolean(response.data.user.admin_role))
+        // sessionStorage.setItem('supervisor_role', Boolean(response.data.supervisor_role))
       }
     }).catch(err => console.log(err))
   }
 
   const doSignOut = (e) => {
     e.preventDefault()
-    console.log("sign out")
+    // console.log("sign out")
     signOut().then(response => {
       // console.log(response)
       setIsAuthenticated(false)

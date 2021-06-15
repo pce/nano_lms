@@ -9,6 +9,8 @@ import '../assets/sass/main.sass';
 
 const LayoutAdmin = (props) => {
 
+  const isAdmin = (sessionStorage.getItem('admin_role') === 'true');
+
   return (<>
     <Navbar sticky="top" bg="light">
       {/* <Navbar.Brand href="/">::</Navbar.Brand> */}
@@ -22,7 +24,7 @@ const LayoutAdmin = (props) => {
         <Nav.Item>
           <Link to="/events"> Termine </Link>
         </Nav.Item>
-        {sessionStorage.getItem('admin_role') && (
+        {isAdmin && (
         <Nav.Item>
           <Link to="/users"> Users</Link>
         </Nav.Item>

@@ -10,6 +10,17 @@ import { withRouter } from 'react-router-dom'
 
 import { fetchUser, updateUser, createUser } from '../../services'
 
+
+function removeByKey(myObj, deleteKey) {
+  return Object.keys(myObj)
+    .filter(key => key !== deleteKey)
+    .reduce((result, current) => {
+      result[current] = myObj[current];
+      return result;
+  }, {});
+}
+
+
 function UsersEditPage(props) {
   const [data, setData] = useState({
     id:0,
@@ -25,7 +36,7 @@ function UsersEditPage(props) {
       return
     }
     fetchUser(props.match.params.id).then((response)=>{
-      console.log(response.data)
+      // console.log(response.data)
       setData(response.data.user)
       setIsLoading(false)
     })
@@ -33,7 +44,8 @@ function UsersEditPage(props) {
 
   const handleSaveUser = (id) => {
     if (props.mode === 'create') {
-      createUser(data)
+      const newUserData = removeByKey(data, 'id')
+      createUser(newUserData)
       .then((result) => {
         setIsLoading(false)
         props.history.push('/users')
@@ -77,10 +89,10 @@ function UsersEditPage(props) {
             {((props.mode === 'create') && (
             <>
             <label>password</label><br/>
-            <input type="text" value={data.password} name="password" onChange={handleInput} style={{width:'100%'}} /><br/>
+            <input type="password" value={data.password} name="password" onChange={handleInput} style={{width:'100%'}} /><br/>
 
             <label>password confirmation</label><br/>
-            <input type="text" value={data.password_confirmation} name="password_confirmation" onChange={handleInput} style={{width:'100%'}} /><br/>
+            <input type="password" value={data.password_confirmation} name="password_confirmation" onChange={handleInput} style={{width:'100%'}} /><br/>
             </>
             ))}
 

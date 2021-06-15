@@ -16,8 +16,8 @@ const UsersIndexPage = (props) => {
 
   useEffect(() => {
     fetchUsers().then((response)=>{
-      console.log(response)
-      console.log(response.data)
+      // console.log(response)
+      // console.log(response.data)
       setData(response.data.users)
       setIsLoading(false)
     })
@@ -31,6 +31,8 @@ const UsersIndexPage = (props) => {
     props.history.push(`users/${id}/edit`)
   }
 
+  const isAdmin = (sessionStorage.getItem('admin_role') === 'true');
+
   return <Container style={{marginTop:'2em'}}>
       <Row>
         <Col>
@@ -38,10 +40,8 @@ const UsersIndexPage = (props) => {
     <span className="sr-only">Loading...</span>
    </Spinner>)) || (
    <>
-
     <h1>Benutzer</h1>
-
-    {sessionStorage.getItem('admin_role') &&
+    {isAdmin &&
      <Button type="button" variant="primary" onClick={() => { handleAddUser() }}>Add</Button>
     }
     <Table responsive>
@@ -62,7 +62,7 @@ const UsersIndexPage = (props) => {
           {item.email}  {item.first_name} {item.last_name}
           </td>
           <td>
-          <Button type="button" variant="primary" onClick={() => { handleEditUser(item.id) }}>Edit</Button>
+          {isAdmin && (<Button type="button" variant="primary" onClick={() => { handleEditUser(item.id) }}>Edit</Button>)}
           </td>
         </tr>
       } )}

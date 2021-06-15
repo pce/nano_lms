@@ -65,6 +65,8 @@ const EventsIndexPage = (props) => {
     setCourseIds(_courseIds)
   }
 
+  const isAdmin = (sessionStorage.getItem('admin_role') === 'true');
+
   return (!isLoading) ?
     <Container  style={{marginTop:'2em'}}>
     <Row>
@@ -72,7 +74,7 @@ const EventsIndexPage = (props) => {
         <h1>Termine</h1>
         <Row>
           <Col>
-            {((sessionStorage.getItem('admin_role')) && (<Button type="button" variant="primary" onClick={() => { handleAddCourse() }}>Add</Button>))}
+            {(isAdmin && (<Button type="button" variant="primary" onClick={() => { handleAddCourse() }}>Add</Button>))}
           </Col>
           <Col>
             <Button type="button" variant="secondary" onClick={() => { setIsFilterVisible(!isFilterVisible) }} style={{float:'right'}}>Filter </Button>
