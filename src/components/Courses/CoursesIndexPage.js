@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
 import Pagination from 'react-bootstrap/Pagination'
 
 import { withRouter, useLocation } from 'react-router-dom'
@@ -44,28 +44,7 @@ const CoursesIndexPage = (props) => {
     // let page = Number(e.target.value)
     // props.history.push(`courses?page=${page}`)
   }
-
-  const listAsCards = () => {
-    return data.courses.map((item)=>{
-      return (
-        <Card style={{marginTop:'4px'}}>
-        <Card.Header>{item.title}</Card.Header>
-        <Card.Body>
-          {/* <Card.Title>{item.title}</Card.Title> */}
-          <Card.Text>
-            {item.description}
-          </Card.Text>
-          <LinkContainer to={`/courses/${item.id}`}>
-            <Button variant="primary">mehr ...</Button>
-          </LinkContainer>
-        </Card.Body>
-        {/* <Card.Footer className="text-muted">2 days ago</Card.Footer> */}
-      </Card>
-      )
-    })
-  }
-
-
+ 
   if (isLoading) {
     return <Spinner animation="border" role="status">
       <span className="sr-only">Loading...</span>
@@ -78,18 +57,36 @@ const CoursesIndexPage = (props) => {
 
   const isAdmin = (sessionStorage.getItem('admin_role') === 'true');
 
-
   return <Container  style={{marginTop:'2em'}}>
     <Row>
       <Col>
         <h1>Kurse</h1>
-        {(isAdmin && (
-          <><Button type="button" variant="primary" onClick={() => { handleAddCourse() }}>Add</Button>
-          {listAsCards()}
-          </>
-        )) || (
-          listAsCards()
-        )}
+        {isAdmin && (<Button type="button" variant="primary" onClick={() => { handleAddCourse() }}>Add</Button>)}
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+          {data.courses.map((item)=>{
+              return <tr>
+                <td>
+                {item.title}
+                </td>
+                <td>
+                {isAdmin && (
+                  <LinkContainer to={`/courses/${item.id}`}>
+                    <Button variant="primary">mehr ...</Button>
+                  </LinkContainer>
+                )}
+                </td>
+              </tr>
+            } )}
+            </tbody>
+          </Table>
+
         </Col>
       </Row>
       <Row>
