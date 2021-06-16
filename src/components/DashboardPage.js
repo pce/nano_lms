@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const DashboardPage = () => {
+export const DashboardPage = (props) => {
   return <div><h1>Dashboard</h1>
-    <p>Hallo!</p>
+    <p>{props.title}</p>
   </div>
 }

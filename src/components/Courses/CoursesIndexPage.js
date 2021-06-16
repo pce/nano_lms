@@ -60,7 +60,7 @@ const CoursesIndexPage = (props) => {
   return <Container  style={{marginTop:'2em'}}>
     <Row>
       <Col>
-        <h1>Kurse</h1>
+        <h1>{props.title}</h1>
         {isAdmin && (<Button type="button" variant="primary" onClick={() => { handleAddCourse() }}>Add</Button>)}
         <Table responsive>
           <thead>

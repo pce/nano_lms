@@ -31,6 +31,13 @@ const LayoutAdmin = (props) => {
         )}
       </Nav>
 
+
+      {/* Example buttons to switch language on the fly */}
+      <Button onClick={(e) => props.changeLanguage('en')} variant="outline-primary">en</Button>
+      <Button onClick={(e) => props.changeLanguage('ja')} variant="outline-primary">ja</Button>
+      <Button onClick={(e) => props.changeLanguage('de')} variant="outline-primary">de</Button>
+       
+
       {/* <Nav.Item onClick={props.doSignOut}>Logout</Nav.Item> */}
       <Button onClick={(e) => props.doSignOut(e)} variant="outline-primary">Logout</Button>
       {/* <Form inline>

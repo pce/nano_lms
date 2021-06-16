@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {
   BrowserRouter as Router, Switch, Route, Redirect
 } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import EventsIndexPage from './components/Events/EventsIndexPage';
 import EventsEditPage from './components/Events/EventsEditPage';
@@ -19,7 +20,13 @@ import { NotFoundPage } from './components/NotFoundPage';
 import LayoutAdmin  from './components/LayoutAdmin';
 import { signIn, signOut } from './services'
 
+
+  
 function App() {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = code => {
+    i18n.changeLanguage(code);
+  };
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -30,6 +37,7 @@ function App() {
       // meFromToken(token)
       // .then((resp) => setIsAuthenticated(resp))
   }, [setIsAuthenticated])
+
 
   const doSignIn = (data) => {
     // e.preventDefault()
@@ -66,70 +74,70 @@ function App() {
    <Router>
       <Switch>
        <Route exact path="/">
-        <LayoutAdmin doSignOut={doSignOut}>
-          <DashboardPage />
+        <LayoutAdmin doSignOut={doSignOut} changeLanguage={changeLanguage} >
+          <DashboardPage title={t('Welcome back!')} />
         </LayoutAdmin>
        </Route>
        <Route exact path="/pdf/events">
           <EventsPrintPage />
        </Route>
        <Route exact path="/events">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut} changeLanguage={changeLanguage}>
           <EventsIndexPage />
         </LayoutAdmin>
        </Route>
        <Route exact path="/events/:id/edit">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut} changeLanguage={changeLanguage}>
           <EventsEditPage />
         </LayoutAdmin>
        </Route>
        <Route exact path="/events/create">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut} changeLanguage={changeLanguage}>
           <EventsEditPage mode='create' />
         </LayoutAdmin>
        </Route>
        <Route exact path="/events/:id">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut} changeLanguage={changeLanguage}>
           <EventsShowPage />
         </LayoutAdmin>
        </Route>
        <Route exact path="/courses">
-        <LayoutAdmin doSignOut={doSignOut}>
-          <CoursesIndexPage />
+        <LayoutAdmin doSignOut={doSignOut} changeLanguage={changeLanguage}>
+          <CoursesIndexPage title={t('Courses')} />
         </LayoutAdmin>
        </Route>
        <Route exact path="/courses/:id/edit">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut} changeLanguage={changeLanguage}>
           <CoursesEditPage />
         </LayoutAdmin>
        </Route>
        <Route exact path="/courses/create">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut} changeLanguage={changeLanguage}>
           <CoursesEditPage mode='create' />
         </LayoutAdmin>
        </Route>
        <Route exact path="/courses/:id">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut}  changeLanguage={changeLanguage}>
           <CoursesShowPage />
         </LayoutAdmin>
        </Route>
        <Route path="/calendar">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut}  changeLanguage={changeLanguage}>
           <CalendarPage />
         </LayoutAdmin>
        </Route>
        <Route exact path="/users/:id/edit">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut}  changeLanguage={changeLanguage}>
           <UsersEditPage />
         </LayoutAdmin>
        </Route>
        <Route path="/users/create">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut}  changeLanguage={changeLanguage}>
           <UsersEditPage mode='create' />
         </LayoutAdmin>
        </Route>
        <Route path="/users">
-        <LayoutAdmin doSignOut={doSignOut}>
+        <LayoutAdmin doSignOut={doSignOut}  changeLanguage={changeLanguage}>
           <UsersIndexPage />
         </LayoutAdmin>
        </Route>
